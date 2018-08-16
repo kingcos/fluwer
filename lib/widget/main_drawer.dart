@@ -12,7 +12,7 @@ class MainDrawer extends StatelessWidget {
             color: const Color(0xFFFFFFFFFF),
           ),
           child: new ListView.builder(
-            itemCount: 4,
+            itemCount: 5 * 2 + 1,
             itemBuilder: renderRow,
           ),
         ),
@@ -24,7 +24,7 @@ class MainDrawer extends StatelessWidget {
     if (index == 0) {
       return Container(
         width: 300.0,
-        height: 300.0,
+        height: 100.0,
         color: Colors.red,
         margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
         child: new Text("Test"),
@@ -43,13 +43,16 @@ class MainDrawer extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
       child: new Row(
         children: <Widget>[
-          new Expanded(child: new Text("1")),
+          new Expanded(child: new Text("$index")),
         ],
       ),
     );
     
     return new InkWell(
       child: listItems,
+      onTap: () {
+        print("Click $index");
+      },
     );
   }
 }

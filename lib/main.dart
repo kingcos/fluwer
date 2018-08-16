@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluwer/widget/main_drawer.dart';
 import 'package:fluwer/page/home_page.dart';
 
 void main() => runApp(new App());
@@ -25,7 +26,7 @@ class AppState extends State<App> {
         body: new HomePage(),
         drawer: new Drawer(
           child: new Center(
-            child: new Text("Drawer"),
+            child: new MainDrawer(),
           ),
         ),
       ),
