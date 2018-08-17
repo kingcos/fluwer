@@ -79,7 +79,8 @@ class AppState extends State<App> {
 
     return new MaterialApp(
       theme: new ThemeData(
-        primaryColor: const Color(0xFF111111)
+          primaryColor: const Color(0xFF111111),
+          fontFamily: ".SF UI Text"
       ),
       home: new Scaffold(
         appBar: new AppBar(
