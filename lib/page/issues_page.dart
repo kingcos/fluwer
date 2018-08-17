@@ -5,7 +5,6 @@ class IssuesPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return new IssuesPageState();
   }
-
 }
 
 class IssuesPageState extends State<IssuesPage> {

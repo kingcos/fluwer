@@ -16,10 +16,7 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-
-  // Tab Bar 索引
-  int _tabBarIndex = 0;
-
+  var _tabBarIndex = 0;
   var _body;
 
   // 初始化
@@ -48,7 +45,7 @@ class AppState extends State<App> {
 
     var list = new List<BottomNavigationBarItem>();
 
-    for (var i = 0; i < tabBarTitles.length; i ++) {
+    for (var i = 0; i < tabBarTitles.length; i++) {
       var iconName;
       if (i == _tabBarIndex) {
         iconName = tabBarIcons[i][1];
@@ -57,15 +54,9 @@ class AppState extends State<App> {
       }
 
       list.add(new BottomNavigationBarItem(
-        icon: new Image.asset(
-            iconName,
-            width: 25.0,
-            height: 25.0
-        ),
-        title: new Text(
-            tabBarTitles[i],
-            style: new TextStyle(color: const Color(0xFF111111))
-        ),
+        icon: new Image.asset(iconName, width: 25.0, height: 25.0),
+        title: new Text(tabBarTitles[i],
+            style: new TextStyle(color: const Color(0xFF111111))),
       ));
     }
 
@@ -79,14 +70,12 @@ class AppState extends State<App> {
 
     return new MaterialApp(
       theme: new ThemeData(
-          primaryColor: const Color(0xFF111111),
-          fontFamily: ".SF UI Text"
-      ),
+          primaryColor: const Color(0xFF111111), fontFamily: ".SF UI Text"),
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text("Fluwer", style: new TextStyle(color: Colors.white)),
-          iconTheme: new IconThemeData(color: Colors.white)
-        ),
+            title:
+                new Text("Fluwer", style: new TextStyle(color: Colors.white)),
+            iconTheme: new IconThemeData(color: Colors.white)),
         body: _body,
         bottomNavigationBar: new CupertinoTabBar(
           items: tabBarItems(),
@@ -100,6 +89,4 @@ class AppState extends State<App> {
       ),
     );
   }
-
-
 }

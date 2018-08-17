@@ -5,7 +5,6 @@ class PackagesPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return new PackagesPageState();
   }
-
 }
 
 class PackagesPageState extends State<PackagesPage> {

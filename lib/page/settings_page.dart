@@ -5,7 +5,6 @@ class SettingsPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return new SettingsPageState();
   }
-
 }
 
 class SettingsPageState extends State<SettingsPage> {

@@ -5,7 +5,6 @@ class JobsPage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return new JobsPageState();
   }
-
 }
 
 class JobsPageState extends State<JobsPage> {
