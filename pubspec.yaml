@@ -12,3 +12,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+      - lib/image/issues.png
+      - lib/image/issues_selected.png
+      - lib/image/jobs.png
+      - lib/image/jobs_selected.png
+      - lib/image/packages.png
+      - lib/image/packages_selected.png
+      - lib/image/settings.png
+      - lib/image/settings_selected.png
