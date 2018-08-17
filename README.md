@@ -1,3 +1,3 @@
 # fluwer
 
-A starter app for easily distributing apps.
+A simple app for easily distributing apps.
