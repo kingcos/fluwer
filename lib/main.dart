@@ -20,7 +20,7 @@ class AppState extends State<App> {
   var _body;
 
   // 初始化
-  void init() {
+  AppState() {
     _tabBarIndex = 0;
 
     _body = new IndexedStack(
@@ -66,9 +66,6 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // 初始化
-    init();
-
     return new MaterialApp(
       theme: new ThemeData(
           primaryColor: const Color(0xFF111111), fontFamily: ".SF UI Text"),
