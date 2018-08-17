@@ -16,12 +16,13 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  var _tabBarIndex = 0;
+  var _tabBarIndex;
   var _body;
 
   // 初始化
   void init() {
-    // 初始化主体
+    _tabBarIndex = 0;
+
     _body = new IndexedStack(
       children: <Widget>[
         new JobsPage(),
