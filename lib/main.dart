@@ -16,13 +16,11 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  var _tabBarIndex;
+  var _tabBarIndex = 0;
   var _body;
 
   // 初始化
-  AppState() {
-    _tabBarIndex = 0;
-
+  init() {
     _body = new IndexedStack(
       children: <Widget>[
         new JobsPage(),
@@ -66,6 +64,8 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    init();
+
     return new MaterialApp(
       theme: new ThemeData(
           primaryColor: const Color(0xFF111111), fontFamily: ".SF UI Text"),
