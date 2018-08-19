@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluwer/page/issues_page.dart';
-import 'package:fluwer/page/jobs_page.dart';
+import 'package:fluwer/page/jobs/jobs_page.dart';
 import 'package:fluwer/page/packages_page.dart';
 import 'package:fluwer/page/settings_page.dart';
 
@@ -37,8 +37,8 @@ class AppState extends State<App> {
 
   // Tab Bar 子项
   List<BottomNavigationBarItem> tabBarItems() {
-    const tabBarTitles = ["Jobs", "Packages", "Issues", "Settings"];
-    const tabBarIcons = [
+    var tabBarTitles = ["Jobs", "Packages", "Issues", "Settings"];
+    var tabBarIcons = [
       ["lib/image/jobs.png", "lib/image/jobs_selected.png"],
       ["lib/image/packages.png", "lib/image/packages_selected.png"],
       ["lib/image/issues.png", "lib/image/issues_selected.png"],
