@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Helper {
-
   // Save string by key locally
   static Future<bool> saveString(String value, String key) async {
     var sp = await SharedPreferences.getInstance();
@@ -17,5 +16,4 @@ class Helper {
 
     return sp.getString(key);
   }
-
 }

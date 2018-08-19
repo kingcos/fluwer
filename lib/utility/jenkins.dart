@@ -1,6 +1,6 @@
-import 'package:fluwer/utility/helper.dart';
-
 import 'dart:async';
+
+import 'package:fluwer/utility/helper.dart';
 
 class Jenkins {
   // APIs
