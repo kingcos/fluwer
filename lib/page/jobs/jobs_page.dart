@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluwer/model/jenkins_job.dart';
+import 'package:fluwer/page/jobs/job_details.dart';
 import 'package:fluwer/utility/jenkins.dart';
 import 'package:fluwer/utility/network.dart';
 
@@ -24,7 +25,7 @@ class JobsPageState extends State<JobsPage> {
   void fetchJenkinsJobs() async {
     var apiHost = await Jenkins.fetchAPIHost();
     var headers = await Jenkins.fetchRequestHeader();
-    var data = await Network.get(apiHost + Jenkins.API_Jobs, headers: headers);
+    var data = await Network.get(apiHost + Jenkins.API_SUFFIX, headers: headers);
 
     if (data == null) {
       return;
@@ -60,7 +61,11 @@ class JobsPageState extends State<JobsPage> {
     return new InkWell(
       child: jobNameRow,
       onTap: () {
-        print("$index");
+        Navigator
+            .of(context)
+            .push(new MaterialPageRoute(builder: (BuildContext context) {
+          return JobDetailsPage();
+        }));
       },
     );
   }
