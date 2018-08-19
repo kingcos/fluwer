@@ -25,7 +25,8 @@ class JobsPageState extends State<JobsPage> {
   void fetchJenkinsJobs() async {
     var apiHost = await Jenkins.fetchAPIHost();
     var headers = await Jenkins.fetchRequestHeader();
-    var data = await Network.get(apiHost + Jenkins.API_SUFFIX, headers: headers);
+    var data = await Network.get(
+        url: apiHost + Jenkins.API_JSON_SUFFIX, headers: headers);
 
     if (data == null) {
       return;
