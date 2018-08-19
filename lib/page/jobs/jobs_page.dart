@@ -14,9 +14,8 @@ class JobsPage extends StatefulWidget {
 }
 
 class JobsPageState extends State<JobsPage> {
-  var _jobs = new List<JenkinsJob>();
-  var _scrollController = new ScrollController();
-  var _rowTextStyle = new TextStyle(fontSize: 18.0);
+  List _jobs = new List<JenkinsJob>();
+  ScrollController _scrollController = new ScrollController();
 
   JobsPageState() {
     fetchJenkinsJobs();
@@ -51,7 +50,8 @@ class JobsPageState extends State<JobsPage> {
         new Expanded(
             child: new Padding(
           padding: const EdgeInsets.all(15.0),
-          child: new Text(_jobs[index].name, style: _rowTextStyle),
+          child:
+              new Text(_jobs[index].name, style: new TextStyle(fontSize: 18.0)),
         ))
       ],
     );
@@ -71,9 +71,7 @@ class JobsPageState extends State<JobsPage> {
   @override
   Widget build(BuildContext context) {
     if (_jobs == null) {
-      return new Center(
-        child: new CircularProgressIndicator(),
-      );
+      return new Center(child: new CircularProgressIndicator());
     }
 
     if (_jobs.length == 0) {
