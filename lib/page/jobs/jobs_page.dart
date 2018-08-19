@@ -22,10 +22,9 @@ class JobsPageState extends State<JobsPage> {
   }
 
   void _fetchJenkinsJobs() async {
-    var apiHost = await Jenkins.fetchAPIHost();
+    var url = await Jenkins.fetchAPIHost() + Jenkins.API_JSON_SUFFIX;
     var headers = await Jenkins.fetchRequestHeader();
-    var data = await Network.get(
-        url: apiHost + Jenkins.API_JSON_SUFFIX, headers: headers);
+    var data = await Network.get(url: url, headers: headers);
 
     if (data == null) {
       return;
@@ -33,7 +32,7 @@ class JobsPageState extends State<JobsPage> {
 
     setState(() {
       for (var jobJSON in json.decode(data)["jobs"]) {
-        _jobs.add(JenkinsJob.fromJson(jobJSON));
+        _jobs.add(JenkinsJob.fromJSON(jobJSON));
       }
     });
   }

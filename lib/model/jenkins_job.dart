@@ -3,7 +3,7 @@ class JenkinsJob {
 
   JenkinsJob({this.name});
 
-  JenkinsJob.fromJson(Map<String, dynamic> json) : name = json['name'];
+  JenkinsJob.fromJSON(Map<String, dynamic> json) : name = json['name'];
 
   Map<String, dynamic> toJSON() => {'name': name};
 }

@@ -4,7 +4,7 @@ class JenkinsJobDetails {
 
   JenkinsJobDetails({this.name, this.description});
 
-  JenkinsJobDetails.fromJson(Map<String, dynamic> json)
+  JenkinsJobDetails.fromJSON(Map<String, dynamic> json)
       : name = json['name'],
         description = json['description'];
 
