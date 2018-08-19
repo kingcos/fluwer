@@ -14,7 +14,7 @@ class JobsPage extends StatefulWidget {
 }
 
 class JobsPageState extends State<JobsPage> {
-  var _jobs = [];
+  var _jobs = new List<JenkinsJob>();
   var _scrollController = new ScrollController();
   var _rowTextStyle = new TextStyle(fontSize: 18.0);
 
@@ -31,13 +31,10 @@ class JobsPageState extends State<JobsPage> {
       return;
     }
 
-    var jobs = [];
-    for (var jobJSON in json.decode(data)["jobs"]) {
-      jobs.add(JenkinsJob.fromJson(jobJSON));
-    }
-
     setState(() {
-      _jobs = jobs;
+      for (var jobJSON in json.decode(data)["jobs"]) {
+        _jobs.add(JenkinsJob.fromJson(jobJSON));
+      }
     });
   }
 
@@ -64,7 +61,7 @@ class JobsPageState extends State<JobsPage> {
         Navigator
             .of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
-          return JobDetailsPage();
+          return new JobDetailsPage(name: _jobs[index].name);
         }));
       },
     );
