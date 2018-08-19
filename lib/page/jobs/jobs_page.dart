@@ -18,10 +18,10 @@ class JobsPageState extends State<JobsPage> {
   ScrollController _scrollController = new ScrollController();
 
   JobsPageState() {
-    fetchJenkinsJobs();
+    _fetchJenkinsJobs();
   }
 
-  void fetchJenkinsJobs() async {
+  void _fetchJenkinsJobs() async {
     var apiHost = await Jenkins.fetchAPIHost();
     var headers = await Jenkins.fetchRequestHeader();
     var data = await Network.get(
@@ -38,7 +38,7 @@ class JobsPageState extends State<JobsPage> {
     });
   }
 
-  Widget renderRowAt(int index) {
+  Widget _rowAt(int index) {
     if (index.isEven) {
       return new Divider(height: 1.0);
     }
@@ -83,7 +83,7 @@ class JobsPageState extends State<JobsPage> {
     return new ListView.builder(
         itemCount: _jobs.length * 2,
         itemBuilder: (BuildContext context, int index) {
-          return renderRowAt(index);
+          return _rowAt(index);
         },
         controller: _scrollController);
   }
