@@ -1,15 +1,9 @@
 class JenkinsJob {
   final String name;
-  final String url;
 
-  JenkinsJob({this.name, this.url});
+  JenkinsJob({this.name});
 
-  JenkinsJob.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        url = json['url'];
+  JenkinsJob.fromJson(Map<String, dynamic> json) : name = json['name'];
 
-  Map<String, dynamic> toJSON() => {
-        'name': name,
-        'url': url,
-      };
+  Map<String, dynamic> toJSON() => {'name': name};
 }
