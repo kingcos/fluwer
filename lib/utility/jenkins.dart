@@ -4,7 +4,7 @@ import 'package:fluwer/utility/helper.dart';
 
 class Jenkins {
   // APIs
-  static const API_Jobs = "/api/json";
+  static const API_SUFFIX = "/api/json";
 
   // Keys
   static const String KEY_HOST = "JENKINS_KEY_HOST";
@@ -13,6 +13,7 @@ class Jenkins {
   static Future<String> fetchAPIHost() async {
     var host = await Helper.getString(KEY_HOST);
 
+    host = "http://172.17.30.245:8080";
     return host;
   }
 
@@ -21,6 +22,7 @@ class Jenkins {
 
     header["Authorization"] = await Helper.getString(KEY_TOKEN);
 
+    header["Authorization"] = "Basic bWFpbWluZzpiZXRwYWctd3Vxa2UwLWtlZ0Jvcg==";
     return header;
   }
 }
