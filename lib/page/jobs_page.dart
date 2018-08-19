@@ -1,11 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-
 import 'package:fluwer/model/jenkins_job.dart';
-
 import 'package:fluwer/utility/jenkins.dart';
 import 'package:fluwer/utility/network.dart';
-
-import 'dart:convert';
 
 class JobsPage extends StatefulWidget {
   @override
@@ -16,8 +14,8 @@ class JobsPage extends StatefulWidget {
 
 class JobsPageState extends State<JobsPage> {
   var _jobs = [];
-
   var _scrollController = new ScrollController();
+  var _rowTextStyle = new TextStyle(fontSize: 18.0);
 
   JobsPageState() {
     fetchJenkinsJobs();
@@ -26,7 +24,7 @@ class JobsPageState extends State<JobsPage> {
   void fetchJenkinsJobs() async {
     var apiHost = await Jenkins.fetchAPIHost();
     var headers = await Jenkins.fetchRequestHeader();
-    var data = await Network.get(apiHost + Jenkins.API_Jobs,headers: headers);
+    var data = await Network.get(apiHost + Jenkins.API_Jobs, headers: headers);
 
     if (data == null) {
       return;
@@ -50,7 +48,13 @@ class JobsPageState extends State<JobsPage> {
     index = index ~/ 2;
 
     var jobNameRow = new Row(
-      children: <Widget>[new Expanded(child: new Text(_jobs[index].name))],
+      children: <Widget>[
+        new Expanded(
+            child: new Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: new Text(_jobs[index].name, style: _rowTextStyle),
+        ))
+      ],
     );
 
     return new InkWell(
@@ -71,7 +75,7 @@ class JobsPageState extends State<JobsPage> {
 
     if (_jobs.length == 0) {
       return new Center(
-        child: new Text("No Jobs"),
+        child: new Text("There's no Jobs"),
       );
     }
 
