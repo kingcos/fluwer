@@ -1,0 +1,3 @@
+class JenkinsBuildParam {}
+
+class JenkinsBuildParamDefaultValue {}
