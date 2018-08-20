@@ -16,15 +16,19 @@ class JobsPage extends StatefulWidget {
 class JobsPageState extends State<JobsPage> {
   List _jobs = new List<JenkinsJob>();
   ScrollController _scrollController = new ScrollController();
+  int _currentPage = 0;
 
   JobsPageState() {
-    _fetchJenkinsJobs();
+    _fetchJenkinsJobs(currentPage: _currentPage);
   }
 
-  void _fetchJenkinsJobs() async {
+  void _fetchJenkinsJobs({int currentPage, int perPage = 5}) async {
+    var params = new Map<String, String>();
+    params["tree"] = "jobs" + Uri.encodeQueryComponent("[name]{$currentPage,$perPage}");
+
     var url = await Jenkins.fetchAPIHost() + Jenkins.API_JSON_SUFFIX;
     var headers = await Jenkins.fetchRequestHeader();
-    var data = await Network.get(url: url, headers: headers);
+    var data = await Network.get(url: url, params: params, headers: headers);
 
     if (data == null) {
       return;
@@ -69,14 +73,8 @@ class JobsPageState extends State<JobsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_jobs == null) {
+    if (_jobs == null || _jobs.length == 0) {
       return new Center(child: new CircularProgressIndicator());
-    }
-
-    if (_jobs.length == 0) {
-      return new Center(
-        child: new Text("There's no Jobs"),
-      );
     }
 
     return new ListView.builder(
