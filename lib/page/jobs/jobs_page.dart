@@ -16,9 +16,6 @@ class JobsPage extends StatefulWidget {
 }
 
 class JobsPageState extends State<JobsPage> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
-
   int _currentPage;
 
   List _jobs;
@@ -41,8 +38,6 @@ class JobsPageState extends State<JobsPage> {
         _currentPage += 1;
 
         setState(() {
-          _refreshIndicatorKey.currentState.show();
-
           _fetchJenkinsJobs();
         });
       }
@@ -132,7 +127,6 @@ class JobsPageState extends State<JobsPage> {
 
     return new Scaffold(
       body: new RefreshIndicator(
-          key: _refreshIndicatorKey,
           child: new ListView.builder(
               itemCount: _jobs.length * 2,
               itemBuilder: (BuildContext context, int index) {
