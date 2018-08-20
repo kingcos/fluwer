@@ -85,7 +85,7 @@ class JobsPageState extends State<JobsPage> {
     if (_jobs == null) {
       return new Center(child: new CircularProgressIndicator());
     }
-    _jobs = [];
+
     if (_jobs.length == 0) {
       return new Center(
         child: new Text(Constants.NO_DATA_PLACEHOLDER, style: new TextStyle(fontSize: 22.0), textAlign: TextAlign.center,),
