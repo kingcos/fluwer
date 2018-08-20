@@ -15,7 +15,6 @@ class Jenkins {
   static Future<String> fetchAPIHost() async {
     var host = await Helper.getString(KEY_HOST);
 
-    host = "http://172.17.30.245:8080";
     return host;
   }
 
