@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:fluwer/page/jobs/job_details.dart';
 import 'package:fluwer/utility/constants.dart';
 import 'package:fluwer/utility/jenkins.dart';
 import 'package:fluwer/utility/network.dart';
-import 'dart:async';
 
 class JobsPage extends StatefulWidget {
   @override
@@ -69,7 +69,7 @@ class JobsPageState extends State<JobsPage> {
   }
 
   Future<Null> _pullToRefresh() async {
-    _jobs.clear();
+    _jobs = null;
     _currentPage = 1;
 
     setState(() {
@@ -123,13 +123,14 @@ class JobsPageState extends State<JobsPage> {
       );
     }
 
-    return new RefreshIndicator(
-        child: new ListView.builder(
-            itemCount: _jobs.length * 2,
-            itemBuilder: (BuildContext context, int index) {
-              return _rowAt(index);
-            },
-            controller: _scrollController),
-        onRefresh: _pullToRefresh);
+    return new Scaffold(
+      body: new RefreshIndicator(
+          child: new ListView.builder(
+              itemCount: _jobs.length * 2,
+              itemBuilder: (BuildContext context, int index) {
+                return _rowAt(index);
+              }),
+          onRefresh: _pullToRefresh),
+    );
   }
 }
