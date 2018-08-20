@@ -6,6 +6,7 @@ import 'package:fluwer/page/jobs/job_details.dart';
 import 'package:fluwer/utility/constants.dart';
 import 'package:fluwer/utility/jenkins.dart';
 import 'package:fluwer/utility/network.dart';
+import 'dart:async';
 
 class JobsPage extends StatefulWidget {
   @override
@@ -24,15 +25,31 @@ class JobsPageState extends State<JobsPage> {
   void initState() {
     super.initState();
 
-    _currentPage = 0;
+    _currentPage = 1;
     _scrollController = new ScrollController();
-    _fetchJenkinsJobs(currentPage: _currentPage);
+
+    _fetchJenkinsJobs();
+
+    _scrollController.addListener(() {
+      var maxScroll = _scrollController.position.maxScrollExtent;
+      var pixels = _scrollController.position.pixels;
+
+      if (maxScroll == pixels) {
+        _currentPage += 1;
+
+        setState(() {
+          _fetchJenkinsJobs();
+        });
+      }
+    });
   }
 
-  void _fetchJenkinsJobs({int currentPage, int perPage = 5}) async {
+  void _fetchJenkinsJobs({int perPage = 5}) async {
+    var startIndex = (_currentPage - 1) * perPage;
+    var endIndex = _currentPage * perPage;
     var params = new Map<String, String>();
     params["tree"] =
-        "jobs" + Uri.encodeQueryComponent("[name]{$currentPage,$perPage}");
+        "jobs" + Uri.encodeQueryComponent("[name]{$startIndex,$endIndex}");
 
     var url = await Jenkins.fetchAPIHost() + Jenkins.API_JSON_SUFFIX;
     var headers = await Jenkins.fetchRequestHeader();
@@ -48,6 +65,15 @@ class JobsPageState extends State<JobsPage> {
       for (var jobJSON in json.decode(data)["jobs"]) {
         _jobs.add(JenkinsJob.fromJSON(jobJSON));
       }
+    });
+  }
+
+  Future<Null> _pullToRefresh() async {
+    _jobs.clear();
+    _currentPage = 1;
+
+    setState(() {
+      _fetchJenkinsJobs();
     });
   }
 
@@ -89,15 +115,21 @@ class JobsPageState extends State<JobsPage> {
 
     if (_jobs.length == 0) {
       return new Center(
-        child: new Text(Constants.NO_DATA_PLACEHOLDER, style: new TextStyle(fontSize: 22.0), textAlign: TextAlign.center,),
+        child: new Text(
+          Constants.NO_DATA_PLACEHOLDER,
+          style: new TextStyle(fontSize: 22.0),
+          textAlign: TextAlign.center,
+        ),
       );
     }
 
-    return new ListView.builder(
-        itemCount: _jobs.length * 2,
-        itemBuilder: (BuildContext context, int index) {
-          return _rowAt(index);
-        },
-        controller: _scrollController);
+    return new RefreshIndicator(
+        child: new ListView.builder(
+            itemCount: _jobs.length * 2,
+            itemBuilder: (BuildContext context, int index) {
+              return _rowAt(index);
+            },
+            controller: _scrollController),
+        onRefresh: _pullToRefresh);
   }
 }
