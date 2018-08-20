@@ -59,7 +59,9 @@ class JobsPageState extends State<JobsPage> {
       return;
     }
 
-    _jobs = new List<JenkinsJob>();
+    if (_jobs == null) {
+      _jobs = new List<JenkinsJob>();
+    }
 
     setState(() {
       for (var jobJSON in json.decode(data)["jobs"]) {
@@ -90,7 +92,7 @@ class JobsPageState extends State<JobsPage> {
             child: new Padding(
           padding: const EdgeInsets.all(15.0),
           child:
-              new Text(_jobs[index].name, style: new TextStyle(fontSize: 18.0)),
+              new Text(_jobs[index].name, style: new TextStyle(fontSize: 50.0)),
         ))
       ],
     );
@@ -129,7 +131,8 @@ class JobsPageState extends State<JobsPage> {
               itemCount: _jobs.length * 2,
               itemBuilder: (BuildContext context, int index) {
                 return _rowAt(index);
-              }),
+              },
+              controller: _scrollController),
           onRefresh: _pullToRefresh),
     );
   }
