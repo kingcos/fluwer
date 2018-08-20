@@ -11,7 +11,7 @@ class Network {
     if (params != null && params.isNotEmpty) {
       var sb = new StringBuffer("?");
       params.forEach((key, value) {
-        sb.write("$key" + "=" + "$value" + "&");
+        sb.write(key + "=" + value + "&");
       });
 
       var param = sb.toString();
