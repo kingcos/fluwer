@@ -44,7 +44,7 @@ class JobsPageState extends State<JobsPage> {
     });
   }
 
-  void _fetchJenkinsJobs({int perPage = 5}) async {
+  void _fetchJenkinsJobs({int perPage = 10}) async {
     var startIndex = (_currentPage - 1) * perPage;
     var endIndex = _currentPage * perPage;
     var params = new Map<String, String>();
@@ -92,7 +92,7 @@ class JobsPageState extends State<JobsPage> {
             child: new Padding(
           padding: const EdgeInsets.all(15.0),
           child:
-              new Text(_jobs[index].name, style: new TextStyle(fontSize: 50.0)),
+              new Text(_jobs[index].name, style: new TextStyle(fontSize: 20.0)),
         ))
       ],
     );
