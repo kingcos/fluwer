@@ -20,15 +20,16 @@ class JobsPageState extends State<JobsPage> {
   List _jobs;
   ScrollController _scrollController;
 
-  JobsPageState() {
+  @override
+  void initState() {
+    super.initState();
+
     _currentPage = 0;
-
     _scrollController = new ScrollController();
-
     _fetchJenkinsJobs(currentPage: _currentPage);
   }
 
-  void _fetchJenkinsJobs({int currentPage, int perPage = 10}) async {
+  void _fetchJenkinsJobs({int currentPage, int perPage = 5}) async {
     var params = new Map<String, String>();
     params["tree"] =
         "jobs" + Uri.encodeQueryComponent("[name]{$currentPage,$perPage}");
