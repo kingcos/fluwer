@@ -16,6 +16,8 @@ class JobsPage extends StatefulWidget {
 }
 
 class JobsPageState extends State<JobsPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   int _currentPage;
 
   List _jobs;
@@ -39,6 +41,9 @@ class JobsPageState extends State<JobsPage> {
 
         setState(() {
           _fetchJenkinsJobs();
+
+          _scaffoldKey.currentState.showSnackBar(const SnackBar(
+              content: const Text(Constants.LOADING_PLACEHOLDER)));
         });
       }
     });
@@ -126,6 +131,7 @@ class JobsPageState extends State<JobsPage> {
     }
 
     return new Scaffold(
+      key: _scaffoldKey,
       body: new RefreshIndicator(
           child: new ListView.builder(
               itemCount: _jobs.length * 2,
