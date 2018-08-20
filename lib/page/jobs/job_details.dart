@@ -20,12 +20,22 @@ class JobDetailsPage extends StatefulWidget {
 }
 
 class JobDetailsPageState extends State<JobDetailsPage> {
-  String jobName;
+  String _jobName;
   JenkinsJobDetails _jobDetails;
-  int _selectedItemIndex = 0;
-  List _branches = new List<String>();
+  int _selectedItemIndex;
+  List _branches;
 
-  JobDetailsPageState({Key key, this.jobName}) {
+  JobDetailsPageState({String jobName}) {
+    _jobName = jobName;
+  }
+
+  @override
+  void initState({String jobName}) {
+    super.initState();
+
+    _selectedItemIndex = 0;
+    _branches = new List<String>();
+
     _fetchGitLabRepoBranches();
     _fetchJobDetails();
   }
@@ -60,7 +70,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     var data = await Network.get(
         url: apiHost +
             Jenkins.API_JOB_DETAILS +
-            jobName +
+            _jobName +
             Jenkins.API_JSON_SUFFIX,
         headers: headers);
 
@@ -121,7 +131,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     if (_jobDetails == null || _branches.length == 9) {
       return new Scaffold(
         appBar: new AppBar(
-          title: new Text(jobName),
+          title: new Text(_jobName),
         ),
         body: new Center(child: new CircularProgressIndicator()),
       );
@@ -129,7 +139,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
 
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text(jobName),
+          title: new Text(_jobName),
         ),
         body: new DecoratedBox(
           decoration: const BoxDecoration(color: const Color(0xFFEFEFF4)),
