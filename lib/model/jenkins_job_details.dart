@@ -1,14 +1,26 @@
 class JenkinsJobDetails {
   final String name;
   final String description;
-  final List<JenkinsBuildParamDefinition> paramDefinitions;
+  final JenkinsBuildParamAction paramAction;
 
-  JenkinsJobDetails({this.name, this.description, this.paramDefinitions});
+  JenkinsJobDetails({this.name, this.description, this.paramAction});
 
   JenkinsJobDetails.fromJSON(Map<String, dynamic> json)
       : name = json['name'],
         description = json['description'],
-        paramDefinitions = json['actions']['parameterDefinitions'];
+        paramAction = JenkinsBuildParamAction
+            .fromJSON(new Map<String, dynamic>.from(json['actions'][0]));
+}
+
+class JenkinsBuildParamAction {
+  final List<JenkinsBuildParamDefinition> paramDefinitions;
+
+  JenkinsBuildParamAction({this.paramDefinitions});
+
+  JenkinsBuildParamAction.fromJSON(Map<String, dynamic> json)
+      : paramDefinitions = (json['parameterDefinitions'] as List)
+            .map((i) => JenkinsBuildParamDefinition.fromJSON(i))
+            .toList();
 }
 
 class JenkinsBuildParamDefinition {
@@ -24,7 +36,8 @@ class JenkinsBuildParamDefinition {
       : name = json['name'],
         description = json['description'],
         type = json['type'],
-        defaultValue = json['actions']['parameterDefinitions'];
+        defaultValue = JenkinsBuildParamDefinitionDefaultValue.fromJSON(
+            new Map<String, dynamic>.from(json['defaultParameterValue']));
 }
 
 class JenkinsBuildParamDefinitionDefaultValue {
