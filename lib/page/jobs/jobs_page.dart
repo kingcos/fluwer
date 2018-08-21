@@ -76,7 +76,6 @@ class JobsPageState extends State<JobsPage> {
   }
 
   Future<Null> _pullToRefresh() async {
-    _jobs = null;
     _currentPage = 1;
 
     setState(() {
