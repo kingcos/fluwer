@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class JobDetailsPageState extends State<JobDetailsPage> {
   String _jobName;
   JenkinsJobDetails _jobDetails;
   int _selectedItemIndex;
-  List _branches;
 
   JobDetailsPageState({String jobName}) {
     _jobName = jobName;
@@ -34,37 +34,11 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     super.initState();
 
     _selectedItemIndex = 0;
-    _branches = new List<String>();
 
-    _fetchGitLabRepoBranches();
     _fetchJobDetails();
   }
 
-  void _fetchGitLabRepoBranches() async {
-    var repoID = await GitLab.fetchRepoID();
-    var url = await GitLab.fetchAPIHost() +
-        GitLab.API_PREFIX +
-        GitLab.API_PROJECTS +
-        repoID +
-        GitLab.API_REPO_BRANCHES +
-        "?page=1&per_page=100";
-    var headers = await GitLab.fetchRequestHeader();
-
-    var data = await Network.get(url: url, headers: headers);
-
-    if (data == null) {
-      return;
-    }
-
-    setState(() {
-      for (var branchJSON in json.decode(data)) {
-        print(GitLabBranch.fromJSON(branchJSON).name);
-        _branches.add(GitLabBranch.fromJSON(branchJSON).name);
-      }
-    });
-  }
-
-  void _fetchJobDetails({String branch, String packType, String email}) async {
+  void _fetchJobDetails() async {
     var apiHost = await Jenkins.fetchAPIHost();
     var headers = await Jenkins.fetchRequestHeader();
     var data = await Network.get(
@@ -82,6 +56,12 @@ class JobDetailsPageState extends State<JobDetailsPage> {
       var jobDetailsJSON = json.decode(data);
 
       _jobDetails = JenkinsJobDetails.fromJSON(jobDetailsJSON);
+    });
+  }
+
+  Future<Null> _pullToRefresh() async {
+    setState(() {
+      _fetchJobDetails();
     });
   }
 
@@ -128,7 +108,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_jobDetails == null || _branches.length == 9) {
+    if (_jobDetails == null) {
       return new Scaffold(
         appBar: new AppBar(
           title: new Text(_jobName),
@@ -141,28 +121,30 @@ class JobDetailsPageState extends State<JobDetailsPage> {
         appBar: new AppBar(
           title: new Text(_jobName),
         ),
-        body: new DecoratedBox(
-          decoration: const BoxDecoration(color: const Color(0xFFEFEFF4)),
-          child: new ListView(
-            children: <Widget>[
-              new Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: new Text(_jobDetails.description,
-                      style: new TextStyle(fontSize: 16.0))),
-              new GestureDetector(
-                onTap: () async {},
-                child: _buildPicker(title: "test1", data: _branches),
+        body: new RefreshIndicator(
+            child: new DecoratedBox(
+              decoration: const BoxDecoration(color: const Color(0xFFEFEFF4)),
+              child: new ListView(
+                children: <Widget>[
+                  new Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: new Text(_jobDetails.description,
+                          style: new TextStyle(fontSize: 16.0))),
+                  new GestureDetector(
+                    onTap: () async {},
+                    child: _buildPicker(title: "test1", data: []),
+                  ),
+                  new GestureDetector(
+                    onTap: () async {},
+                    child: _buildPicker(title: "test2", data: []),
+                  ),
+                  new GestureDetector(
+                    onTap: () async {},
+                    child: _buildPicker(title: "test3", data: []),
+                  )
+                ],
               ),
-              new GestureDetector(
-                onTap: () async {},
-                child: _buildPicker(title: "test2", data: _branches),
-              ),
-              new GestureDetector(
-                onTap: () async {},
-                child: _buildPicker(title: "test3", data: _branches),
-              )
-            ],
-          ),
-        ));
+            ),
+            onRefresh: _pullToRefresh));
   }
 }
