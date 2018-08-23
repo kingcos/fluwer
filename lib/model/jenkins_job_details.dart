@@ -24,20 +24,29 @@ class JenkinsBuildParamAction {
 }
 
 class JenkinsBuildParamDefinition {
-  final String name;
-  final String description;
-  final String type;
-  final JenkinsBuildParamDefinitionDefaultValue defaultValue;
+  String name;
+  String description;
+  String type;
+  JenkinsBuildParamDefinitionDefaultValue defaultValue;
+  List<String> choices;
 
   JenkinsBuildParamDefinition(
-      {this.name, this.description, this.type, this.defaultValue});
+      {this.name,
+      this.description,
+      this.type,
+      this.defaultValue,
+      this.choices});
 
-  JenkinsBuildParamDefinition.fromJSON(Map<String, dynamic> json)
-      : name = json['name'],
-        description = json['description'],
-        type = json['type'],
-        defaultValue = JenkinsBuildParamDefinitionDefaultValue.fromJSON(
-            new Map<String, dynamic>.from(json['defaultParameterValue']));
+  JenkinsBuildParamDefinition.fromJSON(Map<String, dynamic> json) {
+    name = json['name'];
+    description = json['description'];
+    type = json['type'];
+    defaultValue = JenkinsBuildParamDefinitionDefaultValue
+        .fromJSON(new Map<String, dynamic>.from(json['defaultParameterValue']));
+    if (json['choices'] != null) {
+      choices = new List<String>.from(json['choices']);
+    }
+  }
 }
 
 class JenkinsBuildParamDefinitionDefaultValue {
