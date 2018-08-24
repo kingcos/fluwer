@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluwer/model/gitlab_branch.dart';
 import 'package:fluwer/model/jenkins_job_details.dart';
-import 'package:fluwer/utility/gitlab.dart';
 import 'package:fluwer/utility/jenkins.dart';
 import 'package:fluwer/utility/network.dart';
 
@@ -23,7 +21,7 @@ class JobDetailsPage extends StatefulWidget {
 class JobDetailsPageState extends State<JobDetailsPage> {
   String _jobName;
   JenkinsJobDetails _jobDetails;
-  int _selectedItemIndex;
+  List<String> _paramValues;
 
   JobDetailsPageState({String jobName}) {
     _jobName = jobName;
@@ -32,8 +30,6 @@ class JobDetailsPageState extends State<JobDetailsPage> {
   @override
   void initState({String jobName}) {
     super.initState();
-
-    _selectedItemIndex = 0;
 
     _fetchJobDetails();
   }
@@ -56,6 +52,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
       var jobDetailsJSON = json.decode(data);
 
       _jobDetails = JenkinsJobDetails.fromJSON(jobDetailsJSON);
+
+      _paramValues =
+          new List<String>(_jobDetails.paramAction.paramDefinitions.length);
     });
   }
 
@@ -65,45 +64,85 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     });
   }
 
-  Widget _buildPicker({String title, List<String> data}) {
-    if (data.length == 0) {
-      return new Center(child: const CupertinoActivityIndicator());
+  List<Widget> _buildWidgets() {
+    List widgets = new List<Widget>();
+
+    widgets.add(new Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: new Text(_jobDetails.description,
+            style: new TextStyle(fontSize: 16.0))));
+
+    var jobParams = _jobDetails.paramAction.paramDefinitions;
+
+    for (int index = 0; index < jobParams.length; index += 1) {
+      if (jobParams[index].className == Jenkins.BUILD_PARAM_TYPE_STRING) {
+        // String Param
+
+        widgets.add(new Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0),
+          child: new TextFormField(
+            initialValue: jobParams[index].defaultValue.value,
+            decoration: new InputDecoration(
+              labelText: jobParams[index].name,
+              helperText: jobParams[index].description,
+              helperStyle: const TextStyle(fontSize: 10.0),
+            ),
+            onSaved: (value) {
+              setState(() {
+                _paramValues[index] = value;
+              });
+            },
+          ),
+        ));
+      } else if (jobParams[index].className ==
+          Jenkins.BUILD_PARAM_TYPE_CHOICE) {
+        // Choices Param
+
+        widgets.add(new Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0),
+            child: new Container(
+                child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                  new Container(
+                    width: 200.0,
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Text(jobParams[index].name),
+                        new Text(jobParams[index].description,
+                            style: const TextStyle(fontSize: 10.0)),
+                      ],
+                    ),
+                  ),
+                  new Container(
+                    child: new ButtonTheme(
+                      alignedDropdown: true,
+                      child: new DropdownButton<String>(
+                          value: _paramValues[index],
+                          hint: new Text(jobParams[index].defaultValue.value),
+                          items: jobParams[index].choices.map((choice) {
+                            return new DropdownMenuItem(
+                                value: choice, child: new Text(choice));
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _paramValues[index] = value;
+                            });
+                          }),
+                    ),
+                  )
+                ]))));
+      }
     }
 
-    return new Container(
-      decoration: const BoxDecoration(
-        color: CupertinoColors.white,
-        border: const Border(
-          top: const BorderSide(color: const Color(0xFFBCBBC1), width: 0.0),
-          bottom: const BorderSide(color: const Color(0xFFBCBBC1), width: 0.0),
-        ),
-      ),
-      height: 44.0,
-      child: new Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: new SafeArea(
-          top: false,
-          bottom: false,
-          child: new DefaultTextStyle(
-            style: const TextStyle(
-              letterSpacing: -0.24,
-              fontSize: 17.0,
-              color: CupertinoColors.black,
-            ),
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                new Text(title),
-                new Text(
-                  data[_selectedItemIndex],
-                  style: const TextStyle(color: CupertinoColors.inactiveGray),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    widgets.add(new CupertinoButton(
+        child: new Text("Test"),
+        onPressed: () {
+          print(_paramValues);
+        }));
+
+    return widgets;
   }
 
   @override
@@ -125,24 +164,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
             child: new DecoratedBox(
               decoration: const BoxDecoration(color: const Color(0xFFEFEFF4)),
               child: new ListView(
-                children: <Widget>[
-                  new Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: new Text(_jobDetails.description,
-                          style: new TextStyle(fontSize: 16.0))),
-                  new GestureDetector(
-                    onTap: () async {},
-                    child: _buildPicker(title: "test1", data: []),
-                  ),
-                  new GestureDetector(
-                    onTap: () async {},
-                    child: _buildPicker(title: "test2", data: []),
-                  ),
-                  new GestureDetector(
-                    onTap: () async {},
-                    child: _buildPicker(title: "test3", data: []),
-                  )
-                ],
+                children: _buildWidgets(),
               ),
             ),
             onRefresh: _pullToRefresh));
