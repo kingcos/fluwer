@@ -12,6 +12,12 @@ class Jenkins {
   static const String KEY_HOST = "JENKINS_KEY_HOST";
   static const String KEY_TOKEN = "JENKINS_KEY_TOKEN";
 
+  // Constants
+  static const String BUILD_PARAM_TYPE_STRING =
+      "hudson.model.StringParameterDefinition";
+  static const String BUILD_PARAM_TYPE_CHOICE =
+      "hudson.model.ChoiceParameterDefinition";
+
   static Future<String> fetchAPIHost() async {
     var host = await Helper.getString(KEY_HOST);
 
