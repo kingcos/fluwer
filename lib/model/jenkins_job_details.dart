@@ -24,6 +24,7 @@ class JenkinsBuildParamAction {
 }
 
 class JenkinsBuildParamDefinition {
+  String className;
   String name;
   String description;
   String type;
@@ -31,13 +32,15 @@ class JenkinsBuildParamDefinition {
   List<String> choices;
 
   JenkinsBuildParamDefinition(
-      {this.name,
+      {this.className,
+      this.name,
       this.description,
       this.type,
       this.defaultValue,
       this.choices});
 
   JenkinsBuildParamDefinition.fromJSON(Map<String, dynamic> json) {
+    className = json['_class'];
     name = json['name'];
     description = json['description'];
     type = json['type'];
