@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluwer/model/jenkins_job.dart';
+import 'package:fluwer/model/jenkins/jenkins_job.dart';
 import 'package:fluwer/page/jobs/job_details.dart';
 import 'package:fluwer/utility/constants.dart';
 import 'package:fluwer/utility/jenkins.dart';

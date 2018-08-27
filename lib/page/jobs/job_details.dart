@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluwer/model/jenkins_job_details.dart';
+import 'package:fluwer/model/jenkins/jenkins_job_details.dart';
 import 'package:fluwer/utility/jenkins.dart';
 import 'package:fluwer/utility/network.dart';
 
