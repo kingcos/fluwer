@@ -8,6 +8,7 @@ class Pgyer {
   static const API_APP_ICON_PREFIX =
       "https://appicon.pgyer.com/image/view/app_icons/";
   static const API_APP_ALL_BUILDS = "builds";
+  static const API_APP_DETAILS = "view";
 
   // Keys
   static const KEY_APP = "PGYER_KEY_APP";
