@@ -117,10 +117,8 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
           subtitle: new Text(_pgyerApp.buildCreated)),
     ));
 
-    widgets.add(Image.network(
-        _pgyerApp.buildQRCodeURL,
-        width: 300.0,
-        height: 300.0));
+    widgets.add(
+        Image.network(_pgyerApp.buildQRCodeURL, width: 300.0, height: 300.0));
 
     return widgets;
   }
