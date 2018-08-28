@@ -1,4 +1,5 @@
 class PgyerBuild {
+  final String buildKey;
   final String buildName;
   final String buildVersion;
   final String buildVersionNo;
@@ -7,7 +8,8 @@ class PgyerBuild {
   final String buildCreated;
 
   PgyerBuild(
-      {this.buildName,
+      {this.buildKey,
+      this.buildName,
       this.buildVersion,
       this.buildVersionNo,
       this.buildUpdateDescription,
@@ -15,7 +17,8 @@ class PgyerBuild {
       this.buildCreated});
 
   PgyerBuild.fromJSON(Map<String, dynamic> json)
-      : buildName = json['buildName'],
+      : buildKey = json['buildKey'],
+        buildName = json['buildName'],
         buildVersion = json['buildVersion'],
         buildVersionNo = json['buildVersionNo'],
         buildUpdateDescription = json['buildUpdateDescription'],
