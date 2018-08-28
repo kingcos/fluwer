@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluwer/model/pgyer/pgyer_build.dart';
+import 'package:fluwer/page/packages/package_details.dart';
 import 'package:fluwer/utility/constants.dart';
 import 'package:fluwer/utility/network.dart';
 import 'package:fluwer/utility/pgyer.dart';
@@ -61,8 +62,6 @@ class PackagesPageState extends State<PackagesPage> {
     if (data == null) {
       return;
     }
-
-    print(data);
 
     if (_packages == null) {
       _packages = new List<PgyerBuild>();
@@ -147,11 +146,11 @@ class PackagesPageState extends State<PackagesPage> {
     return new InkWell(
       child: packageRow,
       onTap: () {
-//        Navigator
-//            .of(context)
-//            .push(new MaterialPageRoute(builder: (BuildContext context) {
-//          return new JobDetailsPage(name: _packages[index].name);
-//        }));
+        Navigator
+            .of(context)
+            .push(new MaterialPageRoute(builder: (BuildContext context) {
+          return new PackageDetailsPage(buildKey: _packages[index].buildKey);
+        }));
       },
     );
   }
