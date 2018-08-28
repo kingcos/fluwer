@@ -15,14 +15,14 @@ class Pgyer {
   static const KEY_API = "PGYER_KEY_API";
 
   static Future<String> fetchAppKey() async {
-    var host = await Helper.getString(KEY_APP);
+    var appKey = await Helper.getString(KEY_APP);
 
-    return host;
+    return appKey;
   }
 
   static Future<String> fetchAPIKey() async {
-    var host = await Helper.getString(KEY_API);
+    var apiKey = await Helper.getString(KEY_API);
 
-    return host;
+    return apiKey;
   }
 }
