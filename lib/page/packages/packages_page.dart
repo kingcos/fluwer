@@ -91,18 +91,7 @@ class PackagesPageState extends State<PackagesPage> {
 
     index = index ~/ 2;
 
-//    var jobNameRow = new Row(
-//      children: <Widget>[
-//        new Expanded(
-//            child: new Padding(
-//          padding: const EdgeInsets.all(15.0),
-//          child: new Text(_packages[index].buildVersionNo,
-//              style: new TextStyle(fontSize: 20.0)),
-//        ))
-//      ],
-//    );
-
-    var jobNameRow = new Padding(
+    var packageRow = new Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -123,28 +112,28 @@ class PackagesPageState extends State<PackagesPage> {
                           fontSize: 16.0, fontWeight: FontWeight.bold)),
                   new Row(
                     children: <Widget>[
-                      const Text("Version: ",
+                      const Text("- Version: ",
                           style: const TextStyle(fontWeight: FontWeight.w500)),
                       new Text(_packages[index].buildVersion)
                     ],
                   ),
                   new Row(
                     children: <Widget>[
-                      const Text("Version No: ",
+                      const Text("- Version No: ",
                           style: const TextStyle(fontWeight: FontWeight.w500)),
                       new Text(_packages[index].buildVersionNo)
                     ],
                   ),
                   new Row(
                     children: <Widget>[
-                      const Text("Update note: ",
+                      const Text("- Update note: ",
                           style: const TextStyle(fontWeight: FontWeight.w500)),
                       new Text(_packages[index].buildUpdateDescription)
                     ],
                   ),
                   new Row(
                     children: <Widget>[
-                      const Text("Created at: ",
+                      const Text("- Created at: ",
                           style: const TextStyle(fontWeight: FontWeight.w500)),
                       new Text(_packages[index].buildCreated)
                     ],
@@ -156,7 +145,7 @@ class PackagesPageState extends State<PackagesPage> {
         ));
 
     return new InkWell(
-      child: jobNameRow,
+      child: packageRow,
       onTap: () {
 //        Navigator
 //            .of(context)
