@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fluwer/page/issues_page.dart';
+import 'package:fluwer/page/issues/issues_page.dart';
 import 'package:fluwer/page/jobs/jobs_page.dart';
 import 'package:fluwer/page/packages/packages_page.dart';
 import 'package:fluwer/page/settings_page.dart';
