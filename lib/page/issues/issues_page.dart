@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluwer/model/jira/jira_filter.dart';
 import 'package:fluwer/model/jira/jira_issue.dart';
+import 'package:fluwer/page/issues/issue_details.dart';
 import 'package:fluwer/utility/constants.dart';
 import 'package:fluwer/utility/jira.dart';
 import 'package:fluwer/utility/network.dart';
@@ -93,13 +94,15 @@ class IssuesPageState extends State<IssuesPage> {
     ));
 
     return new InkWell(
-        child: issueRow,
-        onTap: () {
-//        Navigator
-//            .of(context)
-//            .push(new MaterialPageRoute(builder: (BuildContext context) {
-//          return new JobDetailsPage(name: _jobs[index].name);
-        });
+      child: issueRow,
+      onTap: () {
+        Navigator
+            .of(context)
+            .push(new MaterialPageRoute(builder: (BuildContext context) {
+          return new IssueDetailsPage(jiraIssue: _issues[index]);
+        }));
+      },
+    );
   }
 
   @override
