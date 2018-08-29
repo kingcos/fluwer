@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluwer/model/pgyer/pgyer_app.dart';
 import 'package:fluwer/utility/network.dart';
 import 'package:fluwer/utility/pgyer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PackageDetailsPage extends StatefulWidget {
   final String buildKey;
@@ -120,7 +122,9 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
     widgets.add(new MergeSemantics(
       child: new ListTile(
           title: new Text('Build file size (MB):'),
-          subtitle: new Text((double.parse(_pgyerApp.buildFileSize) / 1024.0 / 1024.0).toString())),
+          subtitle: new Text(
+              (double.parse(_pgyerApp.buildFileSize) / 1024.0 / 1024.0)
+                  .toString())),
     ));
 
     widgets.add(new MergeSemantics(
@@ -141,6 +145,16 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
     return widgets;
   }
 
+  _openInstallURL() async {
+    var url = Pgyer.API_INSTALL_APP + _pgyerApp.buildKey;
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_pgyerApp == null) {
@@ -156,6 +170,36 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
         key: _scaffoldKey,
         appBar: new AppBar(
           title: new Text(_pgyerApp.buildName),
+          actions: <Widget>[
+            new IconButton(
+                icon: new Icon(Icons.archive),
+                onPressed: () {
+                  return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return new AlertDialog(
+                          title: const Text(
+                              "Are you sure to install this package?"),
+                          actions: <Widget>[
+                            new FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+
+                                  if (Platform.isIOS) {
+                                    _openInstallURL();
+                                  }
+                                },
+                                child: const Text("YES")),
+                            new FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("NO"))
+                          ],
+                        );
+                      });
+                }),
+          ],
         ),
         body: new RefreshIndicator(
             child: new DecoratedBox(
