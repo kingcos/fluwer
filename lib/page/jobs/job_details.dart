@@ -136,11 +136,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
       }
     }
 
-    widgets.add(new CupertinoButton(
-        child: new Text("Test"),
-        onPressed: () {
-          print(_paramValues);
-        }));
+    
 
     return widgets;
   }
@@ -159,6 +155,34 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     return new Scaffold(
         appBar: new AppBar(
           title: new Text(_jobName),
+          actions: <Widget>[
+            new IconButton(
+                icon: new Icon(Icons.update),
+                onPressed: () {
+                  return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return new AlertDialog(
+                          title: const Text(
+                              "Are you sure to start this Jenkins job?"),
+                          actions: <Widget>[
+                            new FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+
+
+                                },
+                                child: const Text("YES")),
+                            new FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("NO"))
+                          ],
+                        );
+                      });
+                }),
+          ],
         ),
         body: new RefreshIndicator(
             child: new DecoratedBox(
