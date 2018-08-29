@@ -107,14 +107,32 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
 
     widgets.add(new MergeSemantics(
       child: new ListTile(
+          title: new Text('Build build version:'),
+          subtitle: new Text(_pgyerApp.buildBuildVersion)),
+    ));
+
+    widgets.add(new MergeSemantics(
+      child: new ListTile(
           title: new Text('Build update description:'),
           subtitle: new Text(_pgyerApp.buildUpdateDescription)),
     ));
 
     widgets.add(new MergeSemantics(
       child: new ListTile(
+          title: new Text('Build file size:'),
+          subtitle: new Text(_pgyerApp.buildFileSize)),
+    ));
+
+    widgets.add(new MergeSemantics(
+      child: new ListTile(
           title: new Text('Build created:'),
           subtitle: new Text(_pgyerApp.buildCreated)),
+    ));
+
+    widgets.add(new MergeSemantics(
+      child: new ListTile(
+          title: new Text('Today download count:'),
+          subtitle: new Text(_pgyerApp.todayDownloadCount.toString())),
     ));
 
     widgets.add(
