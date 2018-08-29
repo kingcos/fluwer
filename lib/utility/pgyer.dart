@@ -9,6 +9,8 @@ class Pgyer {
       "https://appicon.pgyer.com/image/view/app_icons/";
   static const API_APP_ALL_BUILDS = "builds";
   static const API_APP_DETAILS = "view";
+  static const API_INSTALL_APP =
+      "itms-services://?action=download-manifest&url=https://www.pgyer.com/app/plist/";
 
   // Keys
   static const KEY_APP = "PGYER_KEY_APP";
