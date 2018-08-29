@@ -54,7 +54,7 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
 
     setState(() {
       var pgyerAppJSON = json.decode(data)["data"];
-      print(pgyerAppJSON);
+
       _pgyerApp = PgyerApp.fromJSON(pgyerAppJSON);
     });
   }

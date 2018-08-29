@@ -17,11 +17,10 @@ class PackagesPage extends StatefulWidget {
 
 class PackagesPageState extends State<PackagesPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  ScrollController _scrollController;
 
   int _currentPage;
   List _packages;
-
-  ScrollController _scrollController;
 
   @override
   void initState() {

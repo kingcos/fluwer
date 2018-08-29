@@ -17,11 +17,11 @@ class JobsPage extends StatefulWidget {
 
 class JobsPageState extends State<JobsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  ScrollController _scrollController;
 
   int _currentPage;
 
   List _jobs;
-  ScrollController _scrollController;
 
   @override
   void initState() {
