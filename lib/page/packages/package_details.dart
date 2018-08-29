@@ -70,7 +70,7 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
 
     widgets.add(new Padding(
         padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        child: new Text("Pgyer Info:",
+        child: new Text("Pgyer app Info:",
             style:
                 new TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))));
 
