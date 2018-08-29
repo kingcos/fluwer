@@ -119,8 +119,8 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
 
     widgets.add(new MergeSemantics(
       child: new ListTile(
-          title: new Text('Build file size:'),
-          subtitle: new Text(_pgyerApp.buildFileSize)),
+          title: new Text('Build file size (MB):'),
+          subtitle: new Text((double.parse(_pgyerApp.buildFileSize) / 1024.0 / 1024.0).toString())),
     ));
 
     widgets.add(new MergeSemantics(
