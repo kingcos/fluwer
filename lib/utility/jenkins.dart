@@ -44,7 +44,7 @@ class Jenkins {
     }
 
     body['json'] += ']}}';
-    print(body);
+    
     return body;
   }
 }
