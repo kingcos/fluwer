@@ -57,14 +57,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     });
   }
 
-  void _fetchJobBuilds() async {
-
-  }
-
   Future<Null> _pullToRefresh() async {
     setState(() {
       _fetchJobDetails();
-      _fetchJobBuilds();
     });
   }
 
@@ -74,7 +69,8 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     widgets.add(new Padding(
         padding: const EdgeInsets.all(15.0),
         child: new Text(_jobDetails.description,
-            style: new TextStyle(fontSize: 16.0))));
+            style:
+                new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))));
 
     var jobParams = _jobDetails.paramAction.paramDefinitions;
 
@@ -137,6 +133,25 @@ class JobDetailsPageState extends State<JobDetailsPage> {
                     ),
                   )
                 ]))));
+      }
+    }
+
+    if (_jobDetails.builds.length > 0) {
+      widgets.add(new Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: new Text("Recently build history:",
+              style:
+                  new TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))));
+      for (var build in _jobDetails.builds) {
+        widgets.add(new MergeSemantics(
+            child: new ListTile(
+          title: new Text(build.number.toString()),
+          subtitle: new Text(build.url),
+          onTap: () {
+            print(build.number.toString());
+          },
+        )));
+        widgets.add(new Divider(height: 1.0));
       }
     }
 
