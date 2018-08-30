@@ -61,6 +61,7 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
 
   Future<Null> _pullToRefresh() async {
     setState(() {
+      _pgyerApp = null;
       _fetchPackageDetails();
     });
   }
