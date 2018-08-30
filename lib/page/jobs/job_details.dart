@@ -19,6 +19,8 @@ class JobDetailsPage extends StatefulWidget {
 }
 
 class JobDetailsPageState extends State<JobDetailsPage> {
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
   String _jobName;
   JenkinsJobDetails _jobDetails;
   List<String> _paramValues;
@@ -38,10 +40,7 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     var apiHost = await Jenkins.fetchAPIHost();
     var headers = await Jenkins.fetchRequestHeader();
     var data = await Network.get(
-        url: apiHost +
-            Jenkins.API_JOB_DETAILS +
-            _jobName +
-            Jenkins.API_JSON_SUFFIX,
+        url: apiHost + Jenkins.API_JOB + _jobName + Jenkins.API_JSON_SUFFIX,
         headers: headers);
 
     if (data == null) {
@@ -58,9 +57,14 @@ class JobDetailsPageState extends State<JobDetailsPage> {
     });
   }
 
+  void _fetchJobBuilds() async {
+
+  }
+
   Future<Null> _pullToRefresh() async {
     setState(() {
       _fetchJobDetails();
+      _fetchJobBuilds();
     });
   }
 
@@ -136,9 +140,22 @@ class JobDetailsPageState extends State<JobDetailsPage> {
       }
     }
 
-    
-
     return widgets;
+  }
+
+  void _triggerBuild() async {
+    var url = await Jenkins.fetchAPIHost() +
+        Jenkins.API_JOB +
+        _jobDetails.name +
+        Jenkins.API_BUILD;
+    var headers = await Jenkins.fetchRequestHeader();
+    var body = Jenkins.buildRequestBody(
+        keys: _jobDetails.paramAction.paramDefinitions
+            .map((e) => e.name)
+            .toList(),
+        values: _paramValues);
+
+    await Network.post(url: url, headers: headers, body: body);
   }
 
   @override
@@ -169,8 +186,9 @@ class JobDetailsPageState extends State<JobDetailsPage> {
                             new FlatButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
-
-
+                                  _formKey.currentState.save();
+                                  _triggerBuild();
+                                  _pullToRefresh();
                                 },
                                 child: const Text("YES")),
                             new FlatButton(
@@ -186,11 +204,12 @@ class JobDetailsPageState extends State<JobDetailsPage> {
         ),
         body: new RefreshIndicator(
             child: new DecoratedBox(
-              decoration: const BoxDecoration(color: const Color(0xFFEFEFF4)),
-              child: new ListView(
-                children: _buildWidgets(),
-              ),
-            ),
+                decoration: const BoxDecoration(color: const Color(0xFFEFEFF4)),
+                child: new Form(
+                    key: _formKey,
+                    child: new ListView(
+                      children: _buildWidgets(),
+                    ))),
             onRefresh: _pullToRefresh));
   }
 }
