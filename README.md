@@ -12,6 +12,7 @@ This app is still under developing currently.
 - GitLab
 - Jira
 - Pgyer
+- Crashlytics
 
 ## LICENSE
 
