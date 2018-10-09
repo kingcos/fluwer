@@ -84,17 +84,17 @@ class PackageDetailsPageState extends State<PackageDetailsPage> {
           subtitle: new Text(_pgyerApp.buildName)),
     ));
 
-    widgets.add(new MergeSemantics(
-      child: new ListTile(
-          title: new Text('Build password (Long press to copy):'),
-          subtitle: new Text(_pgyerApp.buildPassword),
-          onLongPress: () {
-            Clipboard.setData(new ClipboardData(text: _pgyerApp.buildPassword));
-            _scaffoldKey.currentState.showSnackBar(new SnackBar(
-              content: new Text("Copied to Clipboard"),
-            ));
-          }),
-    ));
+    // widgets.add(new MergeSemantics(
+    //   child: new ListTile(
+    //       title: new Text('Build password (Long press to copy):'),
+    //       subtitle: new Text(_pgyerApp.buildPassword),
+    //       onLongPress: () {
+    //         Clipboard.setData(new ClipboardData(text: _pgyerApp.buildPassword));
+    //         _scaffoldKey.currentState.showSnackBar(new SnackBar(
+    //           content: new Text("Copied to Clipboard"),
+    //         ));
+    //       }),
+    // ));
 
     widgets.add(new MergeSemantics(
       child: new ListTile(

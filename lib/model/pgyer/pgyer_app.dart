@@ -2,7 +2,6 @@ class PgyerApp {
   final String buildKey;
   final String buildFileSize;
   final String buildName;
-  final String buildPassword;
   final String buildVersion;
   final String buildVersionNo;
   final String buildBuildVersion;
@@ -16,7 +15,6 @@ class PgyerApp {
       {this.buildKey,
       this.buildFileSize,
       this.buildName,
-      this.buildPassword,
       this.buildVersion,
       this.buildVersionNo,
       this.buildBuildVersion,
@@ -30,7 +28,6 @@ class PgyerApp {
       : buildKey = json['buildKey'],
         buildFileSize = json['buildFileSize'],
         buildName = json['buildName'],
-        buildPassword = json['buildPassword'],
         buildVersion = json['buildVersion'],
         buildVersionNo = json['buildVersionNo'],
         buildBuildVersion = json['buildBuildVersion'],
