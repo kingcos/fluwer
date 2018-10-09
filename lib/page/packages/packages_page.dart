@@ -96,9 +96,10 @@ class PackagesPageState extends State<PackagesPage> {
           children: <Widget>[
             Image.network(
                 Pgyer.API_APP_ICON_PREFIX + _packages[index].buildIcon,
-                width: 100.0,
-                height: 100.0),
-            new Padding(
+                width: 80.0,
+                height: 80.0),
+            new Expanded(
+                child: new Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -110,43 +111,39 @@ class PackagesPageState extends State<PackagesPage> {
                           fontSize: 16.0, fontWeight: FontWeight.bold)),
                   new Row(
                     children: <Widget>[
-                      const Text("- Version: ",
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      new Text(_packages[index].buildVersion)
+                      new Expanded(
+                          child: new Text(_packages[index].buildVersion))
                     ],
                   ),
                   new Row(
                     children: <Widget>[
-                      const Text("- Version No: ",
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      new Text(_packages[index].buildVersionNo)
+                      new Expanded(
+                          child: new Text(_packages[index].buildVersionNo))
                     ],
                   ),
                   new Row(
                     children: <Widget>[
-                      const Text("- Update note: ",
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      new Text(_packages[index].buildUpdateDescription)
+                      new Expanded(
+                          child:
+                              new Text(_packages[index].buildUpdateDescription))
                     ],
                   ),
                   new Row(
                     children: <Widget>[
-                      const Text("- Created at: ",
-                          style: const TextStyle(fontWeight: FontWeight.w500)),
-                      new Text(_packages[index].buildCreated)
+                      new Expanded(
+                          child: new Text(_packages[index].buildCreated))
                     ],
                   )
                 ],
               ),
-            )
+            )),
           ],
         ));
 
     return new InkWell(
       child: packageRow,
       onTap: () {
-        Navigator
-            .of(context)
+        Navigator.of(context)
             .push(new MaterialPageRoute(builder: (BuildContext context) {
           return new PackageDetailsPage(buildKey: _packages[index].buildKey);
         }));
